@@ -16,4 +16,14 @@ Route::get('/', function () {
 });
 
 Route::get('dashboard', 'DashboardController@index')->name('admin.dashboard');
+Route::get('signup', 'SignupController@signup')->name('admin.signup');
+Route::get('signin', 'SignupController@signin')->name('admin.signin');
+Route::get('forgotpassword', 'SignupController@forgotpassword')->name('admin.forgotpassword');
+
+
+
+
 Route::get('home', 'HomeController@index')->name('front.home');
+Route::get('signup', 'SignupFrontController@signup')->name('front.signup');
+Route::get('signin', 'SignupFrontController@signin')->name('front.signin');
+Route::get('forgotpassword', 'SignupFrontController@forgotpassword')->name('front.forgotpassword');
