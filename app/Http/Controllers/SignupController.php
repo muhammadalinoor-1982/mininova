@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 
 class SignupController extends Controller
 {
-    public function signup()
+    public function employee_registration()
     {
-        return view('Admin/Authentication/signup');
+        return view('Admin/Authentication/employee_registration');
     }
     public function signin()
     {

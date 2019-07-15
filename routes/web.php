@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('dashboard', 'DashboardController@index')->name('admin.dashboard');
-Route::get('signup', 'SignupController@signup')->name('admin.signup');
+Route::resource('registration', 'RegistrationController');
 Route::get('signin', 'SignupController@signin')->name('admin.signin');
 Route::get('forgotpassword', 'SignupController@forgotpassword')->name('admin.forgotpassword');
 
