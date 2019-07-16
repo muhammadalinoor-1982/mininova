@@ -13,10 +13,22 @@ class RegistrationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $data['title']='STAFF LIST';
-        $data['registrations']=Registration::orderBy('id','desc')->get();
+        $registration = new Registration();
+        $registration = $registration->withTrashed();
+        if($request->has('search') && $request->search !=null ){
+            $registration = $registration->where('staff_name', 'like', '%'.$request->search.'%');
+        }
+        if($request->has('staff_status')&& $request->staff_status !=null){
+            $registration = $registration->where('staff_status', $request->staff_status);
+
+        }
+        $registration = $registration->orderBy('id','desc')->paginate(3);
+        $data['registrations']= $registration;
+        //$data['registrations']=Registration::withTrashed()->orderBy('id','desc')->paginate(3);
+        //$data['registrations']=Registration::orderBy('id','desc')->get();
         $data['serial']=1;
         return view('Admin.Authentication.index',$data);
     }
@@ -103,7 +115,7 @@ class RegistrationController extends Controller
             'staff_status'      =>'required',
         ]);
 
-        $registration_r = $request->except('_token');
+        $registration_r = $request->except('_token', '_method');
 
         if($request->hasFile('staff_image')) {
             $file = $request->file('staff_image');
@@ -125,10 +137,23 @@ class RegistrationController extends Controller
      */
     public function destroy(Registration $registration)
     {
-        File::delete($registration->staff_image);
         $registration->delete();
+        session()->flash('message','Staff Trashed successfully');
+        return redirect()->route('registration.index');
+    }
+    public function restore($id)
+    {
+        $registration = Registration::onlyTrashed()->findOrFail($id);
+        $registration->restore();
+        session()->flash('message','Staff Restore successfully');
+        return redirect()->route('registration.index');
+    }
+    public function delete($id)
+    {
+        //File::delete($registration->staff_image);
+        $registration = Registration::onlyTrashed()->findOrFail($id);
+        $registration->forceDelete();
         session()->flash('message','Staff deleted successfully');
         return redirect()->route('registration.index');
     }
-
 }

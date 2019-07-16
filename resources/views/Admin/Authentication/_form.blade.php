@@ -11,6 +11,19 @@
 <div class=" text-danger">{{ $message }}</div>
 @enderror
 
+<div class="col-12 mb-20"><input class="form-control @error('staff_password') is-invalid @enderror" name="staff_password" type="password" value="{{old('staff_password', isset($registration)?$registration->staff_password:null)}}" placeholder="Password"></div>
+@error('staff_password')
+<div class=" text-danger">{{ $message }}</div>
+@enderror
+
+@if(isset($registration) && $registration->staff_image !=null)
+    <img src="{{asset($registration->staff_image)}}" alt="">
+@endif
+<div class="col-12 mb-20"><input class="form-control @error('staff_image') is-invalid @enderror" name="staff_image" type="file" placeholder="Image"></div>
+@error('staff_image')
+<div class=" text-danger">{{ $message }}</div>
+@enderror
+
 @php
     if(old("staff_gender")){
         $staff_gender = old('staff_gender');
@@ -28,18 +41,7 @@
 <div class=" text-danger">{{ $message }}</div>
 @enderror
 
-@if(isset($registration) && $registration->staff_image !=null)
-    <img src="{{asset($registration->staff_image)}}" alt="">
-@endif
-<div class="col-12 mb-20"><input class="form-control @error('staff_image') is-invalid @enderror" name="staff_image" type="file" placeholder="Image"></div>
-@error('staff_image')
-<div class=" text-danger">{{ $message }}</div>
-@enderror
-
-<div class="col-12 mb-20"><input class="form-control @error('staff_password') is-invalid @enderror" name="staff_password" type="password" value="{{old('staff_password', isset($registration)?$registration->staff_password:null)}}" placeholder="Password"></div>
-@error('staff_password')
-<div class=" text-danger">{{ $message }}</div>
-@enderror
+<div class="col-12 mb-20"></div>
 
 @php
     if(old("staff_status")){
@@ -58,3 +60,4 @@
 @error('staff_status')
 <div class=" text-danger">{{ $message }}</div>
 @enderror
+<div class="col-12 mb-20"></div>
