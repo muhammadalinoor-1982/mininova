@@ -1,0 +1,133 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Doctor;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+
+class DoctorController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $data['title']='DOCTOR LIST';
+        $data['doctors']=Doctor::orderBy('id','desc')->get();
+        $data['serial']=1;
+        return view('Admin.Doctor.index',$data);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $data['title']='NEW DOCTOR';
+        return view('Admin.Doctor.create',$data);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'doctor_name'       =>'required',
+            'doctor_degree'     =>'required',
+            'doctor_position'   =>'required',
+            'doctor_email'      =>'required|email',
+            'doctor_phone'      =>'required',
+            'doctor_image'      =>'required',
+        ]);
+
+        $doctor = $request->except('_token');
+
+        if($request->hasFile('doctor_image')) {
+            $file = $request->file('doctor_image');
+            $file->move('images/doctor/', $file->getClientOriginalName());
+            $doctor['doctor_image'] = 'images/doctor/'.$file->getClientOriginalName();
+        }
+
+        Doctor::create($doctor);
+        session()->flash('message','Doctor created successfully');
+        return redirect()->route('doctor.index');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Doctor  $doctor
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Doctor $doctor)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Doctor  $doctor
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Doctor $doctor)
+    {
+        $data['title']='EDIT DOCTOR';
+        $data['doctor']=$doctor;
+        return view('Admin.Doctor.edit',$data);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Doctor  $doctor
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Doctor $doctor)
+    {
+        $request->validate([
+            'doctor_name'       =>'required',
+            'doctor_degree'     =>'required',
+            'doctor_position'   =>'required',
+            'doctor_email'      =>'required|email',
+            'doctor_phone'      =>'required',
+        ]);
+
+        $doctor_r = $request->except('_token');
+
+        if($request->hasFile('doctor_image')) {
+            $file = $request->file('doctor_image');
+            $file->move('images/doctor/', $file->getClientOriginalName());
+            File::delete($doctor->doctor_image);
+            $doctor_r['doctor_image'] = 'images/doctor/'.$file->getClientOriginalName();
+        }
+
+        $doctor->update($doctor_r);
+        session()->flash('message','Doctor information updated successfully');
+        return redirect()->route('doctor.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Doctor  $doctor
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Doctor $doctor)
+    {
+        File::delete($doctor->doctor_image);
+        $doctor->delete();
+        session()->flash('message','Doctor deleted successfully');
+        return redirect()->route('doctor.index');
+    }
+}

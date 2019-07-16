@@ -23,6 +23,7 @@
 
     <!-- Content Body Start -->
     <div class="content-body">
+        @include('layouts.backend._messages')
         @yield('content-body')
         </div>
     <!-- Content Body End -->

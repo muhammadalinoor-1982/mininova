@@ -206,10 +206,12 @@
                             <a class="toggle" href="#">
                                             <span class="user">
                                         <span class="avatar">
-                                            <img src="{{$registration->staff_image}}" alt="">
+                                            <img src="{{asset('miniback/assets/images/avatar/avatar-1.jpg')}}" alt="">
+                                            {{--<img src="{{$registration->staff_image}}" alt="">--}}
                                             <span class="status"></span>
                                             </span>
-                                            <span class="name">{{$registration->staff_name}}</span>
+                                            <span class="name">Aupu Chowdhury</span>
+                                                {{--<span class="name">{{$registration->staff_name}}</span>--}}
                                             </span>
                             </a>
 

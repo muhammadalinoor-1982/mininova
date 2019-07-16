@@ -100,7 +100,6 @@ class RegistrationController extends Controller
             'staff_email'       =>'required|email',
             'staff_phone'       =>'required',
             'staff_gender'      =>'required',
-            'staff_password'    =>'required',
             'staff_status'      =>'required',
         ]);
 
