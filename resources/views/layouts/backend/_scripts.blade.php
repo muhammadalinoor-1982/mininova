@@ -9,6 +9,8 @@
 <script src="{{asset('miniback/assets/js/main.js')}}"></script>
 
 <!-- Plugins & Activation JS For Only This Page -->
+<script src="{{asset('miniback/assets/js/plugins/datatables/datatables.min.js')}}"></script>
+<script src="{{asset('miniback/assets/js/plugins/datatables/datatables.active.js')}}"></script>
 
 <!--Moment-->
 <script src="{{asset('miniback/assets/js/plugins/moment/moment.min.js')}}"></script>

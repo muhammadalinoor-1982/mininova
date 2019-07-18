@@ -16,10 +16,15 @@ Route::get('/', function () {
 });
 
 Route::get('dashboard', 'DashboardController@index')->name('admin.dashboard');
+
 Route::resource('registration', 'RegistrationController');
 Route::post('registration/{id}/restore', 'RegistrationController@restore')->name('registration.restore');
 Route::delete('registration/{id}/delete', 'RegistrationController@delete')->name('registration.delete');
+
 Route::resource('doctor', 'DoctorController');
+Route::post('doctor/{id}/restore', 'DoctorController@restore')->name('doctor.restore');
+Route::delete('doctor/{id}/delete', 'DoctorController@delete')->name('doctor.delete');
+
 Route::get('addsignin', 'SignupController@addsignin')->name('admin.addsignin');
 Route::get('addforgotpassword', 'SignupController@addforgotpassword')->name('admin.addforgotpassword');
 

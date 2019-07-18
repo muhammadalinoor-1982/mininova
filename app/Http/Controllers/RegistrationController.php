@@ -27,9 +27,13 @@ class RegistrationController extends Controller
         }
         $registration = $registration->orderBy('id','desc')->paginate(3);
         $data['registrations']= $registration;
-        //$data['registrations']=Registration::withTrashed()->orderBy('id','desc')->paginate(3);
-        //$data['registrations']=Registration::orderBy('id','desc')->get();
-        $data['serial']=1;
+        if(isset($request->search)||$request->staff_status)
+        {
+            $render['search'] = $request->search;
+            $render['staff_status'] = $request->staff_status;
+            $registration = $registration->appends($render);
+        }
+        $data['serial']=managePagination($registration);
         return view('Admin.Authentication.index',$data);
     }
 

@@ -16,7 +16,7 @@ class DoctorController extends Controller
     public function index()
     {
         $data['title']='DOCTOR LIST';
-        $data['doctors']=Doctor::orderBy('id','desc')->get();
+        $data['doctors']=Doctor::withTrashed()->orderBy('id','desc')->get();
         $data['serial']=1;
         return view('Admin.Doctor.index',$data);
     }
@@ -123,10 +123,32 @@ class DoctorController extends Controller
      * @param  \App\Doctor  $doctor
      * @return \Illuminate\Http\Response
      */
+//    public function destroy(Doctor $doctor)
+//    {
+//        File::delete($doctor->doctor_image);
+//        $doctor->delete();
+//        session()->flash('message','Doctor deleted successfully');
+//        return redirect()->route('doctor.index');
+//    }
+
     public function destroy(Doctor $doctor)
     {
-        File::delete($doctor->doctor_image);
         $doctor->delete();
+        session()->flash('message','Doctor Trashed successfully');
+        return redirect()->route('doctor.index');
+    }
+    public function restore($id)
+    {
+        $doctor = Doctor::onlyTrashed()->findOrFail($id);
+        $doctor->restore();
+        session()->flash('message','Doctor Restore successfully');
+        return redirect()->route('doctor.index');
+    }
+    public function delete($id)
+    {
+        //File::delete($registration->staff_image);
+        $doctor = Doctor::onlyTrashed()->findOrFail($id);
+        $doctor->forceDelete();
         session()->flash('message','Doctor deleted successfully');
         return redirect()->route('doctor.index');
     }
