@@ -10,4 +10,8 @@ class DashboardController extends Controller
     {
         return view('Admin/dashboard');
     }
+//    public function test()
+//    {
+//        return view('Admin.Pres_Materials.create');
+//    }
 }

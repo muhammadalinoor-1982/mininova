@@ -18,6 +18,12 @@
                 </ul>
             </li>
 
+            <li class="has-sub-menu"><a href="#"><i class="fa fa-forumbee" aria-hidden="true"></i> <span>Prescription Materials</span></a>
+                <ul class="side-header-sub-menu">
+                    <li><a href="{{route('source.index')}}"><i class="fa fa-th" aria-hidden="true"></i><span>Source</span></a></li>
+                </ul>
+            </li>
+
         </ul>
     </nav>
 

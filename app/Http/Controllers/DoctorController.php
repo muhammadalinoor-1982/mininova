@@ -123,13 +123,6 @@ class DoctorController extends Controller
      * @param  \App\Doctor  $doctor
      * @return \Illuminate\Http\Response
      */
-//    public function destroy(Doctor $doctor)
-//    {
-//        File::delete($doctor->doctor_image);
-//        $doctor->delete();
-//        session()->flash('message','Doctor deleted successfully');
-//        return redirect()->route('doctor.index');
-//    }
 
     public function destroy(Doctor $doctor)
     {
