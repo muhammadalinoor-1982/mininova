@@ -44,12 +44,14 @@ class DoctorController extends Controller
             'doctor_name'       =>'required',
             'doctor_degree'     =>'required',
             'doctor_position'   =>'required',
-            'doctor_email'      =>'required|email',
+            'doctor_email'      =>'required|email|unique:doctors',
             'doctor_phone'      =>'required',
             'doctor_image'      =>'required',
+            'doctor_password'   =>'required|confirmed',
         ]);
 
-        $doctor = $request->except('_token');
+        $doctor = $request->except('_token','doctor_password');
+        $doctor['doctor_password'] = bcrypt($request->doctor_password);
 
         if($request->hasFile('doctor_image')) {
             $file = $request->file('doctor_image');
@@ -99,11 +101,16 @@ class DoctorController extends Controller
             'doctor_name'       =>'required',
             'doctor_degree'     =>'required',
             'doctor_position'   =>'required',
-            'doctor_email'      =>'required|email',
+            'doctor_email'      =>'required|email|unique:doctors,doctor_email,'.$doctor->id,
             'doctor_phone'      =>'required',
+            'doctor_password'   =>'confirmed',
         ]);
 
-        $doctor_r = $request->except('_token');
+        $doctor_r = $request->except('_token','_method','doctor_password');
+        if($request->has('doctor_password'))
+        {
+        $doctor['doctor_password'] = bcrypt($request->doctor_password);
+        }
 
         if($request->hasFile('doctor_image')) {
             $file = $request->file('doctor_image');
@@ -139,8 +146,8 @@ class DoctorController extends Controller
     }
     public function delete($id)
     {
-        //File::delete($registration->staff_image);
         $doctor = Doctor::onlyTrashed()->findOrFail($id);
+        File::delete($registration->staff_image);
         $doctor->forceDelete();
         session()->flash('message','Doctor deleted successfully');
         return redirect()->route('doctor.index');

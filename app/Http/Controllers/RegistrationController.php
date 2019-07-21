@@ -58,14 +58,15 @@ class RegistrationController extends Controller
     {
         $request->validate([
             'staff_name'        =>'required',
-            'staff_email'       =>'required|email',
+            'staff_email'       =>'required|email|unique:registrations',
             'staff_phone'       =>'required',
             'staff_gender'      =>'required',
-            'staff_password'    =>'required',
+            'staff_password'    =>'confirmed|required',
             'staff_status'      =>'required',
         ]);
 
-        $registration = $request->except('_token');
+        $registration = $request->except('_token', 'staff_password');
+        $registration['staff_password'] = bcrypt($request->staff_password);
 
         if($request->hasFile('staff_image')) {
             $file = $request->file('staff_image');
@@ -113,13 +114,18 @@ class RegistrationController extends Controller
     {
         $request->validate([
             'staff_name'        =>'required',
-            'staff_email'       =>'required|email',
+            'staff_email'       =>'sometimes|required|email|unique:registrations,staff_email,'.$registration->id,
             'staff_phone'       =>'required',
             'staff_gender'      =>'required',
+            'staff_password'    =>'confirmed',
             'staff_status'      =>'required',
         ]);
 
-        $registration_r = $request->except('_token', '_method');
+        $registration_r = $request->except('_token', '_method','staff_password');
+        if($request->has('staff_password'))
+        {
+        $registration_r['staff_password'] = bcrypt($request->staff_password);
+        }
 
         if($request->hasFile('staff_image')) {
             $file = $request->file('staff_image');
@@ -154,8 +160,8 @@ class RegistrationController extends Controller
     }
     public function delete($id)
     {
-        //File::delete($registration->staff_image);
         $registration = Registration::onlyTrashed()->findOrFail($id);
+        File::delete($registration->staff_image);
         $registration->forceDelete();
         session()->flash('message','Staff deleted successfully');
         return redirect()->route('registration.index');

@@ -16,6 +16,11 @@
 <div class=" text-danger">{{ $message }}</div>
 @enderror
 
+<div class="col-12 mb-20"><input class="form-control @error('staff_password_confirmation') is-invalid @enderror" name="staff_password_confirmation" type="password" value="{{old('staff_password_confirmation', isset($registration)?$registration->staff_password_confirmation:null)}}" placeholder="Reconfirm Password"></div>
+@error('staff_password_confirmation')
+<div class=" text-danger">{{ $message }}</div>
+@enderror
+
 @if(isset($registration) && $registration->staff_image !=null)
     <img src="{{asset($registration->staff_image)}}" alt="">
 @endif

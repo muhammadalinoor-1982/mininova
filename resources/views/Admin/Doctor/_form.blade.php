@@ -8,6 +8,11 @@
 <div class=" text-danger">{{ $message }}</div>
 @enderror
 
+<div class="col-12 mb-20"><input class="form-control @error('doctor_password_confirmation') is-invalid @enderror" name="doctor_password_confirmation" type="password" value="{{old('doctor_password_confirmation', isset($doctor)?$doctor->doctor_password_confirmation:null)}}" placeholder="Reconfirmed Password"></div>
+@error('doctor_password_confirmation')
+<div class=" text-danger">{{ $message }}</div>
+@enderror
+
 <div class="col-12 mb-20"><input class="form-control @error('doctor_degree') is-invalid @enderror" name="doctor_degree" type="text" value="{{old('doctor_degree', isset($doctor)?$doctor->doctor_degree:null)}}" placeholder="Degree"></div>
 @error('doctor_degree')
 <div class=" text-danger">{{ $message }}</div>

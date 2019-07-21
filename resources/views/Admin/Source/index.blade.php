@@ -61,11 +61,10 @@
                     <tfoot>
                     <tr>
                         <th>#</th>
-                        <th>Image</th>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Email</th>
-                        <th>Phone</th>
+                        <th>Service Name</th>
+                        <th>Drags Name</th>
+                        <th>Test Name</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                     </tfoot>
