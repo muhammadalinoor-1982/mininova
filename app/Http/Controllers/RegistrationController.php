@@ -75,8 +75,8 @@ class RegistrationController extends Controller
         }
 
         Registration::create($registration);
-        session()->flash('message','Staff created successfully');
-        return redirect()->route('registration.index');
+        session()->flash('message','Thank You For Your Registration');
+        return redirect()->route('login');
     }
 
     /**

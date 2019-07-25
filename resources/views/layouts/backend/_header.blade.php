@@ -229,7 +229,18 @@
                                     </ul>
                                     <ul>
                                         <li><a href="#"><i class="zmdi zmdi-settings"></i>Setting</a></li>
-                                        <li><a href="#"><i class="zmdi zmdi-lock-open"></i>Sing out</a></li>
+                                        <li>
+                                            <a  href="{{ route('logout') }}"
+                                               onclick="event.preventDefault();
+                                                         document.getElementById('logout-form').submit();"><i class="zmdi zmdi-lock-open"></i>
+                                                {{ __('Logout') }}
+                                            </a>
+
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                @csrf
+                                            </form>
+                                        </li>
+                                        {{--<li><a href="#"><i class="zmdi zmdi-lock-open"></i>Sing out</a></li>--}}
                                     </ul>
                                     <ul>
                                         <li><a href="#"><i class="zmdi zmdi-paypal"></i>Payment</a></li>

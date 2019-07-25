@@ -15,8 +15,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::middleware('auth')->group(function(){
+
 Route::get('dashboard', 'DashboardController@index')->name('admin.dashboard');
 Route::get('addsignin', 'SignupController@addsignin')->name('admin.addsignin');
+
+Route::resource('source', 'SourceController');
+Route::post('source/{id}/restore', 'SourceController@restore')->name('source.restore');
+Route::delete('source/{id}/delete', 'SourceController@delete')->name('source.delete');
+
+});
+
 Route::get('addforgotpassword', 'SignupController@addforgotpassword')->name('admin.addforgotpassword');
 
 Route::resource('registration', 'RegistrationController');
@@ -27,18 +36,14 @@ Route::resource('doctor', 'DoctorController');
 Route::post('doctor/{id}/restore', 'DoctorController@restore')->name('doctor.restore');
 Route::delete('doctor/{id}/delete', 'DoctorController@delete')->name('doctor.delete');
 
-Route::resource('source', 'SourceController');
-Route::post('source/{id}/restore', 'SourceController@restore')->name('source.restore');
-Route::delete('source/{id}/delete', 'SourceController@delete')->name('source.delete');
 
 
 //Route::get('test', 'DashboardController@test')->name('admin.test');
-
-
-
-
 
 Route::get('home', 'HomeController@index')->name('front.home');
 Route::get('signup', 'SignupFrontController@signup')->name('front.signup');
 Route::get('signin', 'SignupFrontController@signin')->name('front.signin');
 Route::get('forgotpassword', 'SignupFrontController@forgotpassword')->name('front.forgotpassword');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

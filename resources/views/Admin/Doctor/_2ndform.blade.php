@@ -46,10 +46,10 @@
     }
 @endphp
 <div class="adomx-checkbox-radio-group inline @error('doctor_status') is-invalid @enderror">
-    <label class="adomx-radio"><input type="radio" @if($doctor_status=='active') checked @endif name="$doctor_status" value="active" id="active"> <i class="icon"></i> Active</label>
-    <label class="adomx-radio"><input type="radio" @if($doctor_status=='inactive') checked @endif name="$doctor_status" value="inactive" id="inactive"> <i class="icon"></i> Inactive</label>
+    <label class="adomx-radio"><input type="radio" @if($doctor_status=='active') checked @endif name="doctor_status" value="active" id="active"> <i class="icon"></i> Active</label>
+    <label class="adomx-radio"><input type="radio" @if($doctor_status=='inactive') checked @endif name="doctor_status" value="inactive" id="inactive"> <i class="icon"></i> Inactive</label>
 </div>
-@error('$doctor_status')
+@error('doctor_status')
 <div class=" text-danger">{{ $message }}</div>
 @enderror
-
+<div class="col-12 mb-20"></div>

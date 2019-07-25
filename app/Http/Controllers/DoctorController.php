@@ -147,7 +147,7 @@ class DoctorController extends Controller
     public function delete($id)
     {
         $doctor = Doctor::onlyTrashed()->findOrFail($id);
-        File::delete($registration->staff_image);
+        File::delete($doctor->staff_image);
         $doctor->forceDelete();
         session()->flash('message','Doctor deleted successfully');
         return redirect()->route('doctor.index');
