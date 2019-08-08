@@ -24,6 +24,14 @@ Route::resource('source', 'SourceController');
 Route::post('source/{id}/restore', 'SourceController@restore')->name('source.restore');
 Route::delete('source/{id}/delete', 'SourceController@delete')->name('source.delete');
 
+Route::resource('appointment', 'AppointmentController');
+Route::post('appointment/{id}/restore', 'AppointmentController@restore')->name('appointment.restore');
+Route::delete('appointment/{id}/delete', 'AppointmentController@delete')->name('appointment.delete');
+
+Route::resource('availability', 'AvailabilityController');
+Route::post('availability/{id}/restore', 'AvailabilityController@restore')->name('availability.restore');
+Route::delete('availability/{id}/delete', 'AvailabilityController@delete')->name('availability.delete');
+
 });
 
 Route::get('addforgotpassword', 'SignupController@addforgotpassword')->name('admin.addforgotpassword');

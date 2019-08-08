@@ -20,14 +20,6 @@ class SourceController extends Controller
         return view('Admin.Source.index',$data);
     }
 
-    public function drags()
-    {
-        $data['title']='DRAGS LIST';
-        $data['sources']=Source::withTrashed()->orderBy('id','desc')->get();
-        $data['serial']=1;
-        return view('Admin.Source.drags',$data);
-    }
-
     /**
      * Show the form for creating a new resource.
      *
